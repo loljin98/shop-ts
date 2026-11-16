@@ -283,3 +283,27 @@ app.put("/api/users/:id", requireLogin, async (req, res) => {
 app.listen(PORT, () => {
     console.log(`서버 실행중... http://localhost:${PORT}`);
 })
+
+JavaScript
+import pkg from 'pg';
+const { Pool } = pkg;
+
+// PostgreSQL 연결 설정 (본인의 환경에 맞게 수정하세요)
+const pool = new Pool({
+    user: 'postgres',          
+    host: 'localhost',         
+    database: 'shop_db',       
+    password: 'your_password', 
+    port: 5432,                
+});
+
+// 연결 테스트
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection error', err.stack);
+    } else {
+        console.log('Database connected successfully at:', res.rows[0].now);
+    }
+});
+
+export default pool;
